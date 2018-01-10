@@ -1,0 +1,82 @@
+@import (reference) "~ui/styles/variables";
+
+.docTableBar {
+  margin: 5px 5px 0;
+}
+
+/**
+ * 1. Stack content vertically so the table can scroll when its constrained by a fixed container height.
+ */
+doc-table {
+  overflow: auto;
+  flex: 1 1 100%;
+  flex-direction: column; /* 1 */
+
+  /**
+   * 1. Allow user to scroll table when its constrained by a fixed container height.
+   */
+  .doc-table-container {
+    flex: 1 1 0; /* 1 */
+    overflow: auto; /* 1 */
+  }
+
+  .discover-table-datafield {
+    white-space: pre-wrap;
+
+    // break-word is what we really want but it hasn't been added to the standard and adopted by all browsers yet,
+    // so we provide break-all as a fallback
+    word-break: break-all;
+    word-break: break-word;
+  }
+
+  .discover-table-sourcefield {
+    word-break: break-all;
+    word-break: break-word;
+  }
+
+  .discover-table-row {
+    td {
+      position: relative;
+
+      .table-cell-filter {
+        position: absolute;
+        background-color: @panel-bg;
+        white-space: nowrap;
+        right: 0;
+        display: none;
+      }
+
+      &:hover {
+        .table-cell-filter {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  .loading {
+    opacity: @loading-opacity;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    opacity: @loading-opacity;
+  }
+}
+
+/**
+ * 1. Align icon with text in cell.
+ */
+.docTableRowFilterIcon {
+  font-size: 14px;
+  line-height: 1; /* 1 */
+  display: inline;
+
+  & + & {
+    margin-left: 5px;
+  }
+}

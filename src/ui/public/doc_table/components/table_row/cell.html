@@ -1,0 +1,32 @@
+<%
+var attributes = '';
+if (timefield) {
+  attributes='class="discover-table-timefield" width="1%"';
+} else if (sourcefield) {
+  attributes='class="discover-table-sourcefield"';
+} else {
+  attributes='class="discover-table-datafield"';
+}
+%>
+<td <%= attributes %> data-test-subj="docTableField">
+  <%= formatted %>
+  <span class="table-cell-filter">
+    <% if (filterable) { %>
+      <span
+        ng-click="inlineFilter($event, '+')"
+        class="fa fa-search-plus docTableRowFilterIcon"
+        data-column="<%- column %>"
+        tooltip="Filter for value"
+        tooltip-append-to-body="1"
+      ></span>
+
+      <span
+        ng-click="inlineFilter($event, '-')"
+        class="fa fa-search-minus docTableRowFilterIcon"
+        data-column="<%- column %>"
+        tooltip="Filter out value"
+        tooltip-append-to-body="1"
+      ></span>
+    <% } %>
+  </span>
+</td>

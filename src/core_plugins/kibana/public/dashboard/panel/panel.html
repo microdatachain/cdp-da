@@ -1,0 +1,75 @@
+<div class="panel panel-default" ng-class="{'panel--edit-mode': !isViewOnlyMode()}" ng-switch on="panel.type" ng-if="savedObj || error">
+  <div class="panel-heading">
+    <span class="panel-title" title="{{::savedObj.title}}">
+      {{::savedObj.title}}
+    </span>
+    <div class="btn-group">
+      <a aria-label="Expand"
+         data-test-subj="dashboardPanelExpandIcon"
+         ng-click="toggleExpand()"
+      >
+        <span class="fa" ng-class="{'fa-expand': !isExpanded, 'fa-compress': isExpanded}"></span>
+      </a>
+      <a aria-label="Edit"
+         data-test-subj="dashboardPanelEditLink"
+         ng-show="!isViewOnlyMode() && editUrl"
+         ng-href="{{::editUrl}}"
+      >
+        <i aria-hidden="true" class="fa fa-pencil"></i>
+      </a>
+      <a aria-label="Move"
+         data-test-subj="dashboardPanelMoveIcon"
+         ng-show="!isViewOnlyMode() && !isExpanded"
+         class="panel-move"
+      >
+        <i aria-hidden="true" class="fa fa-arrows"></i>
+      </a>
+      <a aria-label="Remove"
+         data-test-subj="dashboardPanelRemoveIcon"
+         ng-show="!isViewOnlyMode() && !isExpanded"
+         ng-click="remove()"
+      >
+        <i aria-hidden="true" class="fa fa-times"></i>
+      </a>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+
+  <div ng-if="error" class="load-error">
+    <i aria-hidden="true" class="fa fa-exclamation-triangle"></i>
+    <span ng-bind="error"></span>
+  </div>
+
+  <visualize
+    ng-if="!error"
+    ng-switch-when="visualization"
+    vis="savedObj.vis"
+    search-source="savedObj.searchSource"
+    show-spy-panel="!isFullScreenMode"
+    ui-state="uiState"
+    data-shared-item
+    data-title="{{savedObj.title}}"
+    data-description="{{savedObj.description}}"
+    render-counter
+    class="panel-content">
+  </visualize>
+
+  <doc-table
+    ng-if="!error"
+    ng-switch-when="search"
+    search-source="savedObj.searchSource"
+    sorting="panel.sort"
+    columns="panel.columns"
+    data-shared-item
+    data-title="{{savedObj.title}}"
+    data-description="{{savedObj.description}}"
+    render-counter
+    class="panel-content"
+    filter="filter"
+    on-add-column="addColumn"
+    on-change-sort-order="setSortOrder"
+    on-move-column="moveColumn"
+    on-remove-column="removeColumn"
+    >
+  </doc-table>
+</div>
